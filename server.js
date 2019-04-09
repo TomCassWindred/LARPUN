@@ -2,23 +2,32 @@ const express = require('express');
 const hostname = '127.0.0.1';
 const port = 3000;
 
-let exp = express();
-exp.use(express.static('client'));
 
+var bodyParser = require('body-parser');
+let app = express();
+app.use(express.static('client'));
+app.use(bodyParser.urlencoded({extended: true}));
 
-exp.get('/random/:max', function(req, resp){
+app.get('/random/:max', function(req, resp){
     max = parseInt(req.params.max);
     rand = Math.floor(Math.random()*max) +1;
     console.log('Max via url is ' + max + ' rand is ' + rand);
     resp.send('' + rand)
 });
 
-exp.get('/r', function(req, resp){
+app.get('/r', function(req, resp){
     max = parseInt(req.query.max);
     rand = Math.floor(Math.random()*max) +1;
     console.log('Max via query is ' + max + ' rand is ' + rand);
     resp.send('' + rand)
 });
 
-exp.listen(port);
+app.post("/login", function(req, resp){
+    let username =  req.body.charname;
+    console.log("Form received, returning "+ req.body.charname);
+    resp.redirect('userpage.html');
+
+});
+
+app.listen(port);
 console.log("SERVER RUNNING");
