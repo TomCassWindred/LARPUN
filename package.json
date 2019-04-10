@@ -2,8 +2,14 @@
   "name": "LARPUN",
   "version": "1.0.0",
   "dependencies": {
+    "body-parser": "latest",
     "bootstrap": "^4.3.1",
     "express": "^4.16.4",
-    "body-parser": "latest"
+    "express-session": "^1.15.6",
+    "morgan": "^1.9.1",
+    "@okta/oidc-middleware": "latest"
+  },
+  "devDependencies": {
+    "@okta/okta-sdk-nodejs": "^2.0.0"
   }
 }
