@@ -10,6 +10,7 @@
     "@okta/oidc-middleware": "latest"
   },
   "devDependencies": {
-    "@okta/okta-sdk-nodejs": "^2.0.0"
+    "@okta/okta-sdk-nodejs": "^2.0.0",
+    "request": "^2.88.0"
   }
 }
