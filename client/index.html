@@ -17,47 +17,47 @@
     <div class="row justify-content-md-center shadow-lg">
         <div class="shadow-lg p-3 mb-5 bg-white rounded ">
             <h1>Login</h1>
-            <form id="loginform" action='./login' method='post'>
+            <form class="needs-validation" id="loginform" method="post" action="./login">
                 <div class="form-group">
-                    <label for="usernamelogin">Email</label>
-                    <input type="text" class="form-control" name="email" id="usernamelogin" placeholder="Enter Email">
+                    <label for="emaillogin">Email</label>
+                    <input required type="email" class="form-control" name="email" id="emaillogin" placeholder="Enter Email" action="./signup" method="post">
 
                 </div>
                 <div class="form-group">
                     <label for="passwordlogin">Password</label>
-                    <input type="password" class="form-control" name="password" id="passwordlogin" placeholder="Password">
+                    <input required type="password" class="form-control" name="password" id="passwordlogin" placeholder="Password">
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="submitlogin" type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
         <div class="col-1"></div>
         <div class="shadow-lg p-3 mb-5 bg-white rounded ">
             <h1>New Character</h1>
-            <form id="signupform" action="./signup" method="post">
+            <form class="needs-validation" id="signupform" action="./signup" method="post">
                 <div class="form-group">
                     <label for="emailsignup">Email</label>
-                    <input type="text" class="form-control" name="email" id="emailsignup" placeholder="Enter Email">
+                    <input required type="email" class="form-control" name="email" id="emailsignup" placeholder="Enter Email">
 
                 </div>
                 <div class="form-group">
                     <label for="charnamesignup">Character Name</label>
-                    <input type="text" class="form-control" name="charname" id="charnamesignup" placeholder="Enter Character Name">
+                    <input required type="text" class="form-control" name="charname" id="charnamesignup" placeholder="Enter Character Name">
 
                 </div>
                 <div class="form-group">
                     <label for="InputPasswordnew">Password</label>
-                    <input type="password" class="form-control" name="password" id="InputPasswordnew" placeholder="Password">
+                    <input required type="password" class="form-control" name="password" id="InputPasswordnew" placeholder="Password">
                     <small id="cnlHelp" class="form-text text-muted">Please don't use a password you use for anything else</small>
                     <small class="form-text text-muted">This site has 0 security and passwords are stored in plaintext</small>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="submitsignup" type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
 
 </div>
 
-
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script> <!--AXIOS-->
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

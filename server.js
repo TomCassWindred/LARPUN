@@ -78,9 +78,11 @@ app.post("/login", function(req, resp){
 
 app.post("/signup", function(req, resp){
     console.log("SIGNUP DETECTED BEEP BOOP");
+    console.log(req.body);
     let email =  req.body.email;
     let password = req.body.password;
     let charname = req.body.charname;
+    console.log(email);
     newUser(email, password, charname);
     console.log("Form received, returning "+ req.body.username);
     resp.redirect('userpage.html');
