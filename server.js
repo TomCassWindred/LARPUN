@@ -13,19 +13,22 @@ const express = require('express'); //Framework used for server
 const bodyParser = require('body-parser'); //Middleware used to handle JSON, Field Submissions and other data
 const logger = require('morgan'); //Middleware used to keep logs
 const request = require('request');
+var multer  = require('multer'); //Middleware that handles multipart forms
+var upload = multer();
 
 let app = express();
-app.use(express.static('client'));
+
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.use(logger('dev'));
-app.use(express.json());
+
 app.use(session({
     secret: 'wedriudhfiuaYHGHWEIUHDWUEYDFHBWIUHGUIUG88838888888888333PLEASEDONTHACKME uWu',
     resave: true,
     saveUninitialized: false
 }));
-
-function newUser(email, password, charname){  //Creates a new user using the OKTA authentication server
+app.use(express.static('client'));
+async function newUser(email, password, charname, callback){  //Creates a new user using the OKTA authentication server
     let options = {
         url: oktaURL + '/api/v1/users',
         json: true,
@@ -46,11 +49,22 @@ function newUser(email, password, charname){  //Creates a new user using the OKT
             }
         }
     };
-    request.post(options, (err, res, body) => {
-        if (err) { return console.log(err); }
-        console.log("newUSERREQUEST SENT");
-        console.log(body);
-        console.log(body.id);
+    let requestStatus=null;
+    await request.post(options, (err, res, body) => {
+        if (err || body.errorCode) {
+            if (body.errorCode) {
+                console.log(body);
+                err=body.errorCauses[0].errorSummary.toString();
+                console.log(err)
+            } else {
+            console.log("USER FAILED TO CREATE, ERROR: " +err); }
+            callback(false, err)
+        } else {
+            console.log("USER CREATED");
+            callback(true)
+        }
+
+
     });
 }
 
@@ -68,25 +82,31 @@ app.get('/r', function(req, resp){
     resp.send('' + rand)
 });
 
-app.post("/login", function(req, resp){
-    let username =  req.body.username;
+app.post("/login", upload.none(), function(req, resp){
+    let email =  req.body.email;
     let password = req.body.password;
-    console.log("Form received, returning "+ req.body.username);
-    resp.redirect('userpage.html');
+    console.log(email);
+    console.log(req.body);
+    console.log("Form received, returning "+ email);
+    resp.send()
 
 });
 
-app.post("/signup", function(req, resp){
-    console.log("SIGNUP DETECTED BEEP BOOP");
-    console.log(req.body);
+app.post("/signup", upload.none(), function(req, resp){
     let email =  req.body.email;
     let password = req.body.password;
     let charname = req.body.charname;
-    console.log(email);
-    newUser(email, password, charname);
-    console.log("Form received, returning "+ req.body.username);
-    resp.redirect('userpage.html');
+    newUser(email, password, charname, function(status, err=null){
+        if (status===false) {
+            resp.status(422);
+            console.log("SENDING ERROR: "+err);
+            resp.send(err)
+        } else {
+            resp.status(201);
+            resp.send("Creation Successful")
+        }
 
+    })
 });
 
 app.listen(port);

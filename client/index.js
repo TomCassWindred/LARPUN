@@ -1,9 +1,9 @@
 console.log("Index.js started");
 
-$("#submitlogin").click(function(event) {
-
+$("#loginform").submit(function(event) {
+    event.preventDefault();
     // Fetch form to apply custom Bootstrap validation
-    let form = $("#loginform");
+    let form = document.querySelector("#loginform");
     let formData = new FormData(form);
     event.preventDefault();
     if (form[0].checkValidity() === false) {
@@ -19,6 +19,7 @@ $("#submitlogin").click(function(event) {
             .then(function (response) {
                 //handle success
                 console.log(response);
+
             })
             .catch(function (response) {
                 //handle error
@@ -28,19 +29,21 @@ $("#submitlogin").click(function(event) {
 
 
     }
-    form.addClass('was-validated');
+    $("#loginform").addClass('was-validated');
 });
 
-$("#submitsignup").click(function(event) {
-
+$("#signupform").submit(function(event) {
+    console.log("SIGNUP DETECTED");
+    event.preventDefault();
     // Fetch form to apply custom Bootstrap validation
-    let form = $("#signupform");
+    let form = document.querySelector("#signupform");
     let formData = new FormData(form);
     event.preventDefault();
     if (form[0].checkValidity() === false) {
         event.stopPropagation()
     }
     else {
+
         axios({
             method: 'post',
             url: '/signup',
@@ -49,15 +52,21 @@ $("#submitsignup").click(function(event) {
         })
             .then(function (response) {
                 //handle success
+                console.log("RESPONSE RECEIVED");
                 console.log(response);
+                alert("USER CREATED YOU MAY NOW LOG IN")
             })
             .catch(function (response) {
                 //handle error
+
+                console.log("ERROR :(");
                 console.log(response);
+                console.log("RECEIVED RESPONSE: "+response.body);
+                alert(response.body)
             });
 
 
 
     }
-    form.addClass('was-validated');
+    $("#signupform").addClass('was-validated');
 });
