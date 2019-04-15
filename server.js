@@ -49,6 +49,9 @@ async function newUser(email, password, charname, callback){  //Creates a new us
             }
         }
     };
+    console.log("CREATING USER --");
+    console.log("USERNAME: "+ email);
+    console.log("PASSWORD: "+ password);
     await request.post(options, (err, res, body) => {
         if (err || body.errorCode) {
             if (body.errorCode) {
@@ -92,7 +95,7 @@ async function loginUser(username, password, callback) {
         } else {
             console.log(body);
             console.log("LOGIN SUCCESSFUL, SESSION TOKEN: " + body.sessionToken.toString());
-            callback(body.sessionToken)
+            callback(true, body.sessionToken.toString())
         }
     });
 }
@@ -111,13 +114,18 @@ app.get('/r', function(req, resp){
     resp.send('' + rand)
 });
 
+app.get('/userpage', function(req, resp){
+    resp.redirect("/userpage.html")
+});
+
+
 app.post("/login", upload.none(), function(req, resp){
     console.log("LOGIN ATTEMPT DETECTED");
     let email =  req.body.email;
     let password = req.body.password;
     loginUser(email, password, function callback(status, token){
         if (status){
-            console.log("SENDING TOKEN: "+token);
+            console.log("SENDING TOKEN: "+token.toString());
             resp.send(token)}
         else {
             console.log("SENDING LOGIN ERROR");

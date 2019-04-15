@@ -1,5 +1,9 @@
 console.log("Index.js started");
 
+function redirectUserpage(){
+    window.location.href = window.location.href+"/userpage.html"
+}
+
 $("#loginform").submit(function(event) {
     event.preventDefault();
     // Fetch form to apply custom Bootstrap validation
@@ -18,12 +22,16 @@ $("#loginform").submit(function(event) {
         })
             .then(function (response) {
                 //handle success
-                console.log(response);
+                console.log("LOGIN SUCCESSFUL");
+                console.log(response.data);
+                document.cookie = "sessionkey="+response.data;
+                redirectUserpage()
 
             })
             .catch(function (response) {
                 //handle error
                 console.log(response);
+                alert("Login Failed, Please ensure your login details are correct")
             });
 
 
