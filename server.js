@@ -49,7 +49,6 @@ async function newUser(email, password, charname, callback){  //Creates a new us
             }
         }
     };
-    let requestStatus=null;
     await request.post(options, (err, res, body) => {
         if (err || body.errorCode) {
             if (body.errorCode) {
@@ -65,6 +64,36 @@ async function newUser(email, password, charname, callback){  //Creates a new us
         }
 
 
+    });
+}
+async function loginUser(username, password, callback) {
+    let options = {
+        url: oktaURL + "/api/v1/authn",
+        json: true,
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+        },
+        body: {
+            "username": username,
+            "password": password,
+        }
+    };
+    await request.post(options, (err, res, body) => {
+        if (err || body.errorCode) {
+            if (body.errorCode) {
+                console.log(body);
+                err = body.errorSummary.toString();
+                console.log(err)
+            } else {
+                console.log("LOGIN FAILED, ERROR: " + err);
+            }
+            callback(false, err)
+        } else {
+            console.log(body);
+            console.log("LOGIN SUCCESSFUL, SESSION TOKEN: " + body.sessionToken.toString());
+            callback(body.sessionToken)
+        }
     });
 }
 
@@ -83,14 +112,21 @@ app.get('/r', function(req, resp){
 });
 
 app.post("/login", upload.none(), function(req, resp){
+    console.log("LOGIN ATTEMPT DETECTED");
     let email =  req.body.email;
     let password = req.body.password;
-    console.log(email);
-    console.log(req.body);
-    console.log("Form received, returning "+ email);
-    resp.send()
-
+    loginUser(email, password, function callback(status, token){
+        if (status){
+            console.log("SENDING TOKEN: "+token);
+            resp.send(token)}
+        else {
+            console.log("SENDING LOGIN ERROR");
+            resp.status(401).send()
+        }
+    })
 });
+
+
 
 app.post("/signup", upload.none(), function(req, resp){
     let email =  req.body.email;
