@@ -56,13 +56,13 @@ $("#signupform").submit(function(event) {
                 console.log(response);
                 alert("USER CREATED YOU MAY NOW LOG IN")
             })
-            .catch(function (response) {
+            .catch(function (error) {
                 //handle error
 
                 console.log("ERROR :(");
-                console.log(response);
-                console.log("RECEIVED RESPONSE: "+response.body);
-                alert(response.body)
+                console.log(error.response.data);
+                console.log("RECEIVED RESPONSE: "+error.response.data);
+                alert(error.response.data)
             });
 
 
