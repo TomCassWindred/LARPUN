@@ -1,7 +1,7 @@
 console.log("Index.js started");
 
 function redirectUserpage(){
-    window.location.href = window.location.href+"/userpage.html"
+    window.location.href =  "http://"+window.location.host+"/userpage.html"
 }
 
 $("#loginform").submit(function(event) {
@@ -24,7 +24,7 @@ $("#loginform").submit(function(event) {
                 //handle success
                 console.log("LOGIN SUCCESSFUL");
                 console.log(response.data);
-                document.cookie = "sessionkey="+response.data;
+                document.cookie = "sessionID="+response.data;
                 redirectUserpage()
 
             })

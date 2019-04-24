@@ -17,8 +17,23 @@
 <div class="container">
     <div class="card border-0 shadow my-5">
         <div class="card-body p-5">
+            <div class="card border-3 shadow my-2">
+                <div class="card-body p-4">
+                    <h5 class="card-title">Character Info</h5>
+                    <div class="row">
+                    <div class="col-sm">
+                        Character Name: <span id="nameinfo">LOADING...</span> <br>
+                        Progression Points: <span id="ppinfo">LOADING...</span> <br>
+                    </div>
+                    <div class="col-sm">
+                        Time Units: <span id="tuinfo">LOADING...</span> <br>
+                        Research Points: <span id="rpinfo">LOADING...</span>
+                    </div></div>
+                </div>
+            </div>
             <h1 class="font-weight-light">Fixed Full Page Background Image</h1>
-            <p class="lead">In this snippet, the background image is fixed to the body element. Content on the page will scroll, but the image will remain in a fixed position!</p>
+            <p class="lead">In this snippet, the background image is fixed to the body element. Content on the page will
+                scroll, but the image will remain in a fixed position!</p>
             <p class="lead">Scroll down...</p>
             <div style="height: 700px"></div>
             <p class="lead mb-0">You've reached the end!</p>
@@ -26,6 +41,7 @@
     </div>
 </div>
 
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script> <!--AXIOS-->
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -38,5 +54,6 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 <script src="userpage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script><!--Uses the js-cookie library to manage cookies-->
 </body>
 </html>
