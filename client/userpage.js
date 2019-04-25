@@ -3,9 +3,12 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 let characterInfo;
+const sessionID = Cookies.get("sessionID"); //Uses js-cookie library to manage cookies
+const userID = Cookies.get("userID");
+
 
 function getCharacter(){
-    sessionID = Cookies.get("sessionID"); //Uses js-cookie library to manage cookies
+
     axios.get('/char/'+sessionID.toString())
         .then(function (response) {
         // handle success
@@ -34,15 +37,43 @@ function populateInfo() {
 }
 
 function characterUpdate(updatedvalues){
+    for (var key in updatedvalues){
+        characterInfo[key] = updatedvalues[key]
+    }
+
+    axios.post("/updatevalues/"+userID.toString(), characterInfo)
+        .then(function (response) {
+            populateInfo();
+            alert("VALUES SUCCESSFULLY UPDATED")
+        })
+        .catch(function (error) {
+            alert("Value Update Failed")
+        })
+        .then(function () {
+            // always executed
+        });
 
 }
 
 function studyAction(){
-    characterUpdate()
+    if (characterInfo.TimeUnitsCurrent>=2) {
+        characterUpdate({"ResearchPoints":parseInt(characterInfo.ResearchPoints)+20,"TimeUnitsCurrent": characterInfo.TimeUnitsCurrent-2})
+    } else {
+        alert("Not enough Time Units remaining to do this action")
+        }
 }
-function trainAction(){
 
+function trainAction(){
+    if (characterInfo.TimeUnitsCurrent>=5) {
+        characterUpdate({"ProgressionPoints":parseInt(characterInfo.ProgressionPoints)+1,"TimeUnitsCurrent": characterInfo.TimeUnitsCurrent-5})
+    } else {
+        alert("Not enough Time Units remaining to do this action")
+    }
 }
 function prepareAction(){
-
+    if (characterInfo.TimeUnitsCurrent>=2 && characterInfo.ResearchPoints>=10) {
+        characterUpdate({"PreparedMana":parseInt(characterInfo.PreparedMana)+1,"TimeUnitsCurrent": characterInfo.TimeUnitsCurrent-2, "ResearchPoints":characterInfo.ResearchPoints-10})
+    } else {
+        alert("Not enough Time Units remaining to do this action")
+    }
 }

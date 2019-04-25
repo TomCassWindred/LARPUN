@@ -222,6 +222,19 @@ app.get("/char/:sessionID", function (req, resp) {
 
 });
 
+app.post("/updatevalues/:userID", function (req, resp) {
+    console.log("CHAR UPDATE DETECTED");
+    let newJSONstring = JSON.stringify(req.body);
+    let filePath = __dirname + "/characters/" + req.params.userID + ".json";
+    fs.writeFile(filePath, newJSONstring, function (err) { //Write the string back onto the file
+        if (err) throw err;
+        console.log('Character Updated!');});
+        resp.send()
+
+
+
+});
+
 app.post("/login", upload.none(), function (req, resp) {
     console.log("LOGIN ATTEMPT DETECTED");
     let email = req.body.email;
