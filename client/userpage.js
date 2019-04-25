@@ -32,3 +32,17 @@ function populateInfo() {
     $("#tuinfo").html(characterInfo.TimeUnitsCurrent+"/"+characterInfo.TimeUnitsMax);
     $("#rpinfo").html(characterInfo.ResearchPoints);
 }
+
+function characterUpdate(updatedvalues){
+
+}
+
+function studyAction(){
+    characterUpdate()
+}
+function trainAction(){
+
+}
+function prepareAction(){
+
+}

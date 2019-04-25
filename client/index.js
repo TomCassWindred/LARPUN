@@ -24,7 +24,8 @@ $("#loginform").submit(function(event) {
                 //handle success
                 console.log("LOGIN SUCCESSFUL");
                 console.log(response.data);
-                document.cookie = "sessionID="+response.data;
+                document.cookie = "sessionID="+response.data.sessionID;
+                document.cookie = "userID="+response.data.userID;
                 redirectUserpage()
 
             })

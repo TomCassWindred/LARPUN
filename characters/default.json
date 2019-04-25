@@ -3,5 +3,6 @@
   "ProgressionPoints": 0,
   "TimeUnitsMax": 10,
   "TimeUnitsCurrent": 10,
-  "ResearchPoints": 100
+  "ResearchPoints": 100,
+  "PreparedMana": 0
 }

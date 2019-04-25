@@ -31,6 +31,23 @@
                     </div></div>
                 </div>
             </div>
+            <div class="card border-3 shadow my-2">
+                <div class="card-body p-4">
+                    <h5 class="card-title">Basic Actions</h5>
+                    <button type="button" class="btn btn-primary" onclick="studyAction()">Study</button> to gain 20 research points (these can also be earned in play)  <span class="badge badge-primary">Time Cost: 2</span> <br> <br>
+                    <button type="button" class="btn btn-primary" onclick="trainAction()">Train</button> to gain a progression point (these can also be earned in play)  <span class="badge badge-primary">Time Cost: 5</span> <br> <br>
+                    <button type="button" class="btn btn-primary" onclick="prepareAction()">Prepare</button> to gain an additional two mana points next event  <span class="badge badge-primary">Time Cost: 2</span> <span class="badge badge-info">Research Cost: 10</span> <span class="badge badge-secondary">Total Prepared: <span id="preparedmana">0</span> </span> <br> <br>
+                </div>
+            </div>
+            <div class="card border-3 shadow my-2">
+                <div class="card-body p-4">
+                    <h5 class="card-title">Complex Actions</h5>
+                    <label for="InvestigationAction">Investigation Action <span class="badge badge-primary">Time Cost: 4</span></label>
+                    <textarea class="form-control" id="InvestigationAction" rows="3"></textarea> <br>
+                    <label for="InvestigationAction">Research Action <span class="badge badge-primary">Time Cost: 3</span> <span class="badge badge-info">Research Cost: 40</span></label>
+                    <textarea class="form-control" id="ResearchAction" rows="3"></textarea>
+                </div>
+            </div>
             <h1 class="font-weight-light">Fixed Full Page Background Image</h1>
             <p class="lead">In this snippet, the background image is fixed to the body element. Content on the page will
                 scroll, but the image will remain in a fixed position!</p>
