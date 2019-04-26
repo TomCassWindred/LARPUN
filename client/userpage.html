@@ -10,7 +10,7 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="userpage.css">
 
-    <title>Hello, world!</title>
+    <title>Downtime Manager</title>
 </head>
 <body>
 <!--PARTIALLY TAKEN FROM https://startbootstrap.com/snippets/full-image-background/-->
@@ -43,17 +43,21 @@
                 <div class="card-body p-4">
                     <h5 class="card-title">Complex Actions</h5>
                     <label for="InvestigationAction">Investigation Action <span class="badge badge-primary">Time Cost: 4</span></label>
+                    <button type="button" class="btn btn-primary btn-sm float-right" onclick="investigationAction()">Submit Investigation Action</button>
                     <textarea class="form-control" id="InvestigationAction" rows="3"></textarea> <br>
+
+
                     <label for="InvestigationAction">Research Action <span class="badge badge-primary">Time Cost: 3</span> <span class="badge badge-info">Research Cost: 40</span></label>
+                    <button type="button" class="btn btn-primary btn-sm float-right" onclick="researchAction()">Submit Research Action</button>
                     <textarea class="form-control" id="ResearchAction" rows="3"></textarea>
+
                 </div>
             </div>
-            <h1 class="font-weight-light">Fixed Full Page Background Image</h1>
-            <p class="lead">In this snippet, the background image is fixed to the body element. Content on the page will
-                scroll, but the image will remain in a fixed position!</p>
-            <p class="lead">Scroll down...</p>
-            <div style="height: 700px"></div>
-            <p class="lead mb-0">You've reached the end!</p>
+            <h1 class="font-weight-light">User Guide</h1>
+            <p class="lead">Use the blue buttons in order to submit certain actions, their cost is described in the labels to the right of each description. For example, pressing the
+            "Study" button will expend 2 Time Units in order to gain 20 research points.</p>
+            <p class="lead">Complex actions work in the same way. Fill in the text box with a description of your action, and then press the submit button, this will
+            expend the actions cost and submit your action to the referees.</p>
         </div>
     </div>
 </div>
@@ -69,8 +73,8 @@
         crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
 
+crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script><!--Uses the js-cookie library to manage cookies-->
 
 <script src="userpage.js"></script>

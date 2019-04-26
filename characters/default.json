@@ -4,5 +4,8 @@
   "TimeUnitsMax": 10,
   "TimeUnitsCurrent": 10,
   "ResearchPoints": 100,
-  "PreparedMana": 0
+  "PreparedMana": 0,
+  "ResearchActions": [],
+  "InvestigationActions": []
+
 }
