@@ -131,7 +131,7 @@ async function createSession(sessiontoken, callback) {
         } else {
             console.log(body);
             console.log("SESSION CREATION SUCCESSFUL, SESSION ID: " + body.id.toString());
-            callback(true, body.id)
+            callback(true, body.id, body.userId)
         }
 
     })
@@ -222,14 +222,27 @@ app.get("/char/:sessionID", function (req, resp) {
 
 });
 
+app.post("/updatevalues/:userID", function (req, resp) {
+    console.log("CHAR UPDATE DETECTED");
+    let newJSONstring = JSON.stringify(req.body);
+    let filePath = __dirname + "/characters/" + req.params.userID + ".json";
+    fs.writeFile(filePath, newJSONstring, function (err) { //Write the string back onto the file
+        if (err) throw err;
+        console.log('Character Updated!');});
+        resp.send()
+
+
+
+});
+
 app.post("/login", upload.none(), function (req, resp) {
     console.log("LOGIN ATTEMPT DETECTED");
     let email = req.body.email;
     let password = req.body.password;
-    loginUser(email, password, function callback(status, sessionID) { //This callback function is called by the loginUser function when it resolves
+    loginUser(email, password, function callback(status, sessionID, userID) { //This callback function is called by the loginUser function when it resolves
         if (status) {
             console.log("SENDING TOKEN: " + sessionID.toString());
-            resp.send(sessionID)
+            resp.send({"sessionID":sessionID, "userID": userID})
         } else {
             console.log("SENDING LOGIN ERROR");
             resp.status(401).send()
