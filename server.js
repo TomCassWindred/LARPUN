@@ -209,11 +209,9 @@ app.get('/userpage', function (req, resp) {
 });
 
 app.get("/char/:sessionID", function (req, resp) {
-    console.log("CHAR GET DETECTED");
     let sessionID = req.params.sessionID;
     getCharInfoFromSessionID(sessionID, function (status, data) {
         if (status) {
-            console.log("SENDING CHARACTER DATA: "+data.toString());
             resp.send(data.toString())
         } else {
             resp.status(400).send(data)
@@ -227,8 +225,7 @@ app.post("/updatevalues/:userID", function (req, resp) {
     let newJSONstring = JSON.stringify(req.body);
     let filePath = __dirname + "/characters/" + req.params.userID + ".json";
     fs.writeFile(filePath, newJSONstring, function (err) { //Write the string back onto the file
-        if (err) throw err;
-        console.log('Character Updated!');});
+        if (err) throw err;});
         resp.send()
 
 
@@ -236,12 +233,10 @@ app.post("/updatevalues/:userID", function (req, resp) {
 });
 
 app.post("/login", upload.none(), function (req, resp) {
-    console.log("LOGIN ATTEMPT DETECTED");
     let email = req.body.email;
     let password = req.body.password;
     loginUser(email, password, function callback(status, sessionID, userID) { //This callback function is called by the loginUser function when it resolves
         if (status) {
-            console.log("SENDING TOKEN: " + sessionID.toString());
             resp.send({"sessionID":sessionID, "userID": userID})
         } else {
             console.log("SENDING LOGIN ERROR");

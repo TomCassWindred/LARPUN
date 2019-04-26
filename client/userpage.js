@@ -34,6 +34,7 @@ function populateInfo() {
     $("#ppinfo").html(characterInfo.ProgressionPoints);
     $("#tuinfo").html(characterInfo.TimeUnitsCurrent + "/" + characterInfo.TimeUnitsMax);
     $("#rpinfo").html(characterInfo.ResearchPoints);
+    $("#preparedmana").html(characterInfo.PreparedMana);
 }
 
 function characterUpdate() { //This updates the servers version of the character sheet with the new one
@@ -41,7 +42,6 @@ function characterUpdate() { //This updates the servers version of the character
     axios.post("/updatevalues/" + userID.toString(), characterInfo)
         .then(function (response) {
             populateInfo();
-            alert("VALUES SUCCESSFULLY UPDATED")
         })
         .catch(function (error) {
             alert("Value Update Failed");
