@@ -48,7 +48,18 @@ each button performs a certain basic action that has effects on the character at
 button will either perform the action and update the attributes both on the server and on the page, or
 if there are not enough resources of the action has failed for another reason, an alert will appear with
 the reason  
---The "*Complex Actions*" block contains two text input boxes, each 
+-The "*Complex Actions*" block contains two text input boxes, each with a submit button. Filling in
+the input boxes and pressing submit will submit that text and put it into the relevant character sheet
+on the server.  
+-Finally a small user guide is placed at the bottom with a more basic version of this guide.
+
+
+####API Documentation
+The api for this project is designed to be used in conjunction with the website, but could be used 
+independently.
+
+In order to use any of the other API calls, a `SessionID` and `UserID` is generated
+
 
 
 
