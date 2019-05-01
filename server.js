@@ -1,6 +1,6 @@
 const hostname = "127.0.0.1";
-const port = 3000;
+const fallbackport = 3000;
 
 const app = require("./app");
-app.listen(port);
-console.log("SERVER RUNNING AT: "+hostname+":"+port);
+app.listen(process.env.PORT || fallbackport);
+console.log("SERVER RUNNING");
