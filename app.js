@@ -1,4 +1,3 @@
-
 /*Constants that store details for the authorization API okta.com*/
 //const authClientID = "0oag1yxo1EKOXWZ5B356";
 //const authClientSecret = "INhXV5J2ZZLBhPr1cWi-vzc0q3xpFBsvknhPf4v";
@@ -11,18 +10,21 @@ const session = require("express-session");
 const express = require("express"); //Framework used for server
 const bodyParser = require("body-parser"); //Middleware used to handle JSON, Field Submissions and other data
 const logger = require("morgan"); //Middleware used to keep logs
-const request = require("request");
+const request = require("request"); //Used to make HTTP requests
 const multer = require("multer"); //Middleware that handles multipart forms
-const upload = multer();
+const upload = multer(); //Required for multer to work
 const fs = require("fs"); //Manages file reading
 
 let app = express();
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({extended: true})); //Activates  bodyparser middleware defined earlier
 app.use(bodyParser.json());
-app.use(logger("dev"));
 
-app.use(session({
+//THIS PRINTS INFORMATION TO CONSOLE SO YOU KNOW WHAT THE SERVER IS DOING
+app.use(logger("dev")); //COMMENT THIS TO STOP PRINTING TO CONSOLE
+
+
+app.use(session({ //Used to track the session
 	secret: "wedriudhfiuaYHGHWEIUHDWUEYDFHBWIUHGUIUG88838888888888333PLEASEDONTHACKME uWu",
 	resave: true,
 	saveUninitialized: false
@@ -84,7 +86,7 @@ async function newUser(email, password, charname, callback) {  //Creates a new u
 	//console.log("CREATING USER --");
 	//console.log("USERNAME: " + email);
 	//console.log("PASSWORD: " + password);
-	await request.post(options, (err, res, body) => { //Make a post request to the OKTA
+	await request.post(options, (err, res, body) => { //Make a post request to the OKTA Server
 		if (err || body.errorCode) {
 			if (body.errorCode) {
 				//console.log(body);
@@ -96,7 +98,7 @@ async function newUser(email, password, charname, callback) {  //Creates a new u
 			callback(false, err);
 		} else {
 			//console.log("USER CREATED");
-			initCharacter(charname, body.id);
+			initCharacter(charname, body.id); //Create a character file for the account
 			callback(true);
 		}
 
@@ -106,6 +108,7 @@ async function newUser(email, password, charname, callback) {  //Creates a new u
 
 
 async function createSession(sessiontoken, callback) {
+	//Uses the single-use session token created by the login process to initialise a session on the OKTA servers
 	let options = {
 		url: oktaURL + "/api/v1/sessions",
 		json: true,
@@ -184,7 +187,7 @@ async function getCharInfoFromSessionID(sessionID, callback) { //Used to get the
 				err = body.errorSummary.toString();
 				//console.log(err);
 			} else {
-				////console.log("NO SESSION FOUND, ERROR: " + err);
+				//console.log("NO SESSION FOUND, ERROR: " + err);
 			}
 			callback(false, err);
 		} else {
@@ -197,14 +200,14 @@ async function getCharInfoFromSessionID(sessionID, callback) { //Used to get the
 				callback(true, charinfo);
 			} else {
 				//console.log("Character does not exist, activate crying mode");
-				callback(false, "CHARACTER DOES NOT EXIST");
+				callback(false, "CHARACTER DOES NOT EXIST"); //Returns the error which is returned to the user which is then displayed
 			}
 		}
 	});
 }
 
-app.get("/pingtest", function (req, resp){
-	resp.send(200)
+app.get("/pingtest", function (req, resp) {
+	resp.send(200);
 });
 
 app.get("/userpage", function (req, resp) {
@@ -212,7 +215,6 @@ app.get("/userpage", function (req, resp) {
 });
 
 app.get("/char/:sessionID", function (req, resp) { //Gets the character file for a specific session id
-	console.log("CHAR GET");
 	let sessionID = req.params.sessionID;
 	getCharInfoFromSessionID(sessionID, function (status, data) {
 		if (status) {
@@ -229,9 +231,9 @@ app.post("/updatevalues/:userID", function (req, resp) {
 	let newJSONstring = JSON.stringify(req.body);
 	let filePath = __dirname + "/characters/" + req.params.userID + ".json";
 	fs.writeFile(filePath, newJSONstring, function (err) { //Write the string back onto the file
-		if (err) throw err;});
+		if (err) throw err;
+	});
 	resp.send();
-
 
 
 });
@@ -241,7 +243,7 @@ app.post("/login", upload.none(), function (req, resp) {
 	let password = req.body.password;
 	loginUser(email, password, function callback(status, sessionID, userID) { //This callback function is called by the loginUser function when it resolves
 		if (status) {
-			resp.send({"sessionID":sessionID, "userID": userID});
+			resp.send({"sessionID": sessionID, "userID": userID});
 		} else {
 			//console.log("SENDING LOGIN ERROR");
 			resp.status(401).send();
@@ -250,10 +252,12 @@ app.post("/login", upload.none(), function (req, resp) {
 });
 
 
-app.post("/signup", upload.none(), function (req, resp) {
+app.post("/signup", upload.none(), function (req, resp) { //Takes a signup request to make a new account
 	let email = req.body.email;
 	let password = req.body.password;
 	let charname = req.body.charname;
+
+	//This function creates the new user and account, and then calls the callback function with the success status
 	newUser(email, password, charname, function (status, err = null) {
 		if (status === false) {
 			resp.status(422);
